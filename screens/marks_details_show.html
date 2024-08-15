@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        #rollNumber {
+            padding: 10px;
+            width: 200px;
+            margin-right: 10px;
+        }
+        #fetchMarks {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #errorMessage {
+            color: red;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Marks Details</h1>
+
+    <label for="rollNumber">Enter Roll Number:</label>
+    <input type="text" id="rollNumber" placeholder="Roll Number">
+    <button id="fetchMarks">Fetch Marks</button>
+
+    <div id="errorMessage"></div>
+
+    <table id="marks-table">
+        <thead>
+            <tr>
+                <th>Roll Number</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Department</th>
+                <th>Marks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('fetchMarks').addEventListener('click', () => {
+            const rollNumber = document.getElementById('rollNumber').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const tableBody = document.querySelector('#marks-table tbody');
+            
+            if (!rollNumber) {
+                errorMessage.textContent = 'Please enter a roll number.';
+                return;
+            }
+
+            errorMessage.textContent = ''; // Clear any previous error messages
+            tableBody.innerHTML = ''; // Clear the table before fetching new data
+
+            fetch(`/get-marks?rollNumber=${rollNumber}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        errorMessage.textContent = data.error;
+                    } else {
+                        data.forEach(mark => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${mark.id}</td>
+                                <td>${mark.name}</td>
+                                <td>${mark.course}</td>
+                                <td>${mark.department}</td>
+                                <td>${mark.marks}</td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching marks:', error);
+                    errorMessage.textContent = 'An error occurred while fetching marks.';
+                });
+        });
+    </script>
+
+</body>
+</html>

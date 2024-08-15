@@ -85,3 +85,16 @@ router.post('/update-marks', (req, res) => {
         res.status(200).json({ message: "Marks  updated successfully" });
     });
 });
+router.get('/students/by-department', (req, res) => {
+    const { department } = req.query;
+
+    if (!department) {
+        return res.status(400).send({ error: 'Department is required' });
+    }
+
+    const sql = `SELECT * FROM Student WHERE department = ?`;
+    db.query(sql, [department], (err, results) => {
+        if (err) return res.status(500).send({ error: 'Database query failed' });
+        res.status(200).json(results);
+    });
+});

@@ -56,5 +56,11 @@ router.get('/get-marks', (req, res) => {
         res.status(200).json(results);
     });
 });
-
+router.get('/get-all-instrctor',(req,res)=>{
+    const query= 'SELECT* FROM Instructor';
+    db.query(query, (err, results) => {
+        if (err) return res.status(500).json({ error: 'Database query failed' });
+        res.status(200).json(results);
+    });
+});
 module.exports = router;

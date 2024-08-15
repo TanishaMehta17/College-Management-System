@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructors Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        #errorMessage {
+            color: red;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Instructors Details</h1>
+
+    <button id="fetchInstructors">Fetch Instructors</button>
+
+    <div id="errorMessage"></div>
+
+    <table id="instructors-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Contact Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('fetchInstructors').addEventListener('click', () => {
+            const errorMessage = document.getElementById('errorMessage');
+            const tableBody = document.querySelector('#instructors-table tbody');
+            
+            errorMessage.textContent = ''; // Clear any previous error messages
+            tableBody.innerHTML = ''; // Clear the table before fetching new data
+
+            fetch('/get-all-instructor')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        errorMessage.textContent = data.error;
+                    } else {
+                        data.forEach(instructor => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${instructor.id}</td>
+                                <td>${instructor.name}</td>
+                                <td>${instructor.email}</td>
+                                <td>${instructor.department}</td>
+                                <td>${instructor.contact_number}</td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching instructors:', error);
+                    errorMessage.textContent = 'An error occurred while fetching instructors.';
+                });
+        });
+    </script>
+
+</body>
+</html>
