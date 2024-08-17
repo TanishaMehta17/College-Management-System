@@ -41,7 +41,7 @@ router.post('/login', (req, res) => {
         if (results.length > 0) {
             const student = results[0];
             
-            if (password === student.password) {
+            if (password == student.password) {
                 res.redirect('/screens/dashboard.html');
             } else {
                 return res.status(401).json({ error: 'Incorrect password' });

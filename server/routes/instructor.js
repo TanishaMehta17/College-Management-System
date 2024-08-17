@@ -11,7 +11,7 @@ InstructorRouter.post('/instructor/sign-up', (req, res) => {
 
     connection.query(sql, [name, contact_number, department, course, email, password], (err, result) => {
         if (err) return res.status(500).send({ error: 'Database connection failed' });
-        res.status(201).send({ id: result.insertId });
+        res.redirect('/screens/instructor_login.html'); 
     });
 });
 InstructorRouter.post('/instructor/login', (req, res) => {
@@ -60,19 +60,36 @@ InstructorRouter.get('/get-course-code', (req, res) => {
     });
 });
 
+InstructorRouter.post('/update-marks', (req, res) => {
+    const { id, department, course, marks } = req.body;
+
+    const query = `
+        UPDATE Mark
+        SET marks = ?
+        WHERE id = ? AND department = ? AND course = ?;
+    `;
+    
+    connection.query(query, [marks, id, department, course], (err, result) => {
+        if (err) return res.status(500).json({ error: "Database update failed" });
+        if (result.affectedRows === 0) return res.status(404).json({ error: "Record not found" });
+        
+        res.status(200).json({ message: "Marks updated successfully" });
+    });
+});
+
 InstructorRouter.post('/update-exam', (req, res) => {
-    const { id, examDate, examCourseCode, examCourse, department, timing } = req.body;
+    const { exam_course_code, exam_date, department, timing } = req.body;
 
     const query = `
         UPDATE Exam
-        SET exam_date = ?, examCourseCode = ?, exam_course = ?, department = ?, timing = ?
-        WHERE id = ?;
+        SET exam_date = ?, department = ?, timing = ?
+        WHERE exam_course_code = ?;
     `;
-    
-    connection.query(query, [examDate, examCourseCode, examCourse, department, timing, id], (err, result) => {
+
+    connection.query(query, [exam_date, department, timing, exam_course_code], (err, result) => {
         if (err) return res.status(500).json({ error: "Database update failed" });
         if (result.affectedRows === 0) return res.status(404).json({ error: "Exam not found" });
-        
+
         res.status(200).json({ message: "Exam details updated successfully" });
     });
 });
@@ -86,22 +103,8 @@ InstructorRouter.post('/upload-marks',(req,res)=>{
     })
 });
 
-InstructorRouter.post('/update-marks', (req, res) => {
-    const {id,name, department,course,marks}= req.body;
 
-    const query = `
-        UPDATE Exam
-        SET id = ?, name = ?, department = ?, course = ?, marks = ?
-        WHERE id = ?;
-    `;
-    
-    connection.query(query, [id, name, department, course, marks], (err, result) => {
-        if (err) return res.status(500).json({ error: "Database update failed" });
-        if (result.affectedRows === 0) return res.status(404).json({ error: "Exam not found" });
-        
-        res.status(200).json({ message: "Marks  updated successfully" });
-    });
-});
+
 InstructorRouter.get('/students/by-department', (req, res) => {
     const { department } = req.query;
 

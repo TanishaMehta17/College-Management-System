@@ -39,12 +39,12 @@ connection.connect(err => {
 
     const createInstructorTable = `
         CREATE TABLE IF NOT EXISTS Instructor (
-            id INT PRIMARY KEY AUTO_INCREMENT,
+            id INT AUTO_INCREMENT,
             name VARCHAR(50) NOT NULL,
             contact_number VARCHAR(20) NOT NULL,
             department VARCHAR(50) NOT NULL,
             course VARCHAR(100) NOT NULL,
-            email VARCHAR(50) NOT NULL,
+            email VARCHAR(50) NOT NULL  PRIMARY KEY,
             password VARCHAR(255) NOT NULL
         );
     `;
@@ -62,7 +62,7 @@ const createAdminTable = `
 CREATE TABLE IF NOT EXISTS Admin (
  id VARCHAR(50) ,
  name VARCHAR(100),
-  email VARCHAR(50) NOT NULL,
+  email VARCHAR(50) NOT NULL PRIMARY KEY,
  password VARCHAR(255) NOT NULL
 );
 

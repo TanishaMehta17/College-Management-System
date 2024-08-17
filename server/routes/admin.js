@@ -10,12 +10,35 @@ adminRouter.post('/admin/sign-up', (req, res) => {
 
     const sql = `INSERT INTO Admin (id, name, email, password)
                  VALUES (?, ?, ?, ?)`;
-    db.query(sql, [id, name, email, password], (err, result) => {
+    connection.query(sql, [id, name, email, password], (err, result) => {
         if (err) {
             console.error('Database error:', err);
             return res.status(500).send({ error: 'Database connection failed' });
         }
         res.redirect('/screens/login.html');
+    });
+});
+adminRouter.post('/admin/login', (req, res) => {
+    const { email, password } = req.body;
+    const query = 'SELECT * FROM Admin WHERE email = ?';
+    
+    connection.query(query, [email], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Database connection failed' });
+        }
+
+        if (results.length > 0) {
+            const admin = results[0];
+            
+            // Password comparison (assuming no hashing is being used)
+            if (password == admin.password) {
+                res.redirect('/screens/dashboard_admin.html');
+            } else {
+                return res.status(401).json({ error: 'Incorrect password' });
+            }
+        } else {
+            return res.status(404).json({ error: 'User not found' });
+        }
     });
 });
 

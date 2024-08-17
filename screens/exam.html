@@ -6,13 +6,41 @@
     <title>Exam Details Form</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f4f7;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #004080;
+            margin-bottom: 20px;
+        }
+        .alert {
+            display: none;
+            margin-bottom: 20px;
+        }
+        .alert-success {
+            color: green;
+        }
+        .alert-danger {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
         <h2>Exam Details Form</h2>
-        <form>
+        <div id="responseMessage" class="alert"></div>
+        <form id="examForm">
             <div class="form-group">
-                <label for="examCourse">Exam Course Code</label>
+                <label for="examCourseCode">Exam Course Code</label>
                 <input type="text" class="form-control" id="examCourseCode" name="examCourseCode" required>
             </div>
             <div class="form-group">
@@ -29,7 +57,7 @@
             </div>
             <div class="form-group">
                 <label for="timing">Timing</label>
-                <input type="time" class="form-control" id="timing" name="timing" required>
+                <input type="text" class="form-control" id="timing" name="timing" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -38,5 +66,34 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('examForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch('http://localhost:5000/exams', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                var responseMessage = document.getElementById('responseMessage');
+                if (data.error) {
+                    responseMessage.className = 'alert alert-danger';
+                    responseMessage.textContent = data.error;
+                } else {
+                    responseMessage.className = 'alert alert-success';
+                    responseMessage.textContent = 'Exam details added successfully! Exam ID: ' + data.id;
+                }
+                responseMessage.style.display = 'block';
+                this.reset();
+            })
+            .catch(error => {
+                var responseMessage = document.getElementById('responseMessage');
+                responseMessage.className = 'alert alert-danger';
+                responseMessage.textContent = 'Error: ' + error.message;
+                responseMessage.style.display = 'block';
+            });
+        });
+    </script>
 </body>
 </html>

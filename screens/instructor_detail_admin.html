@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructors Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7f9fc;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+            color: #004080;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #004080;
+            color: #fff;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        #errorMessage {
+            color: red;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Instructors Details</h1>
+
+        <div id="errorMessage"></div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Contact Number</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Course</th>
+                </tr>
+            </thead>
+            <tbody id="instructors-table-body">
+                <!-- Data will be inserted here dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const errorMessage = document.getElementById('errorMessage');
+            const tableBody = document.getElementById('instructors-table-body');
+            
+            errorMessage.textContent = ''; 
+            tableBody.innerHTML = ''; 
+
+            fetch('http://localhost:5000/instructor-details')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        errorMessage.textContent = data.error;
+                    } else {
+                        data.forEach(instructor => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${instructor.name}</td>
+                                <td>${instructor.contact_number}</td>
+                                <td>${instructor.email}</td>
+                                <td>${instructor.department}</td>
+                                <td>${instructor.course}</td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching instructors:', error);
+                    errorMessage.textContent = 'An error occurred while fetching instructors.';
+                });
+        });
+    </script>
+</body>
+</html>
