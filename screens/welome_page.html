@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('https://wallpaperaccess.com/full/4521429.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .blurred-container {
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        .blurred-container img.logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+        .blurred-container h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .icons {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+        .icons a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+        }
+        .icons img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        .icons img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="blurred-container">
+        <img src="https://images.static-collegedunia.com/public/college_data/images/logos/1484201094D.jpg?tr=h-80,w-80,c-force" alt="IIIT Logo" class="logo">
+        <h1><strong>Welcome</strong> </h1>
+    </div>
+    <div class="icons">
+        <a href="/screens/signup_student.html">
+            <img src="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Student-3-1024.png" alt="Student">
+            Student
+        </a>
+        <a href="/screens/signup_instructor.html">
+            <img src="https://th.bing.com/th/id/R.a9220c4836242f26681d61770866c9e4?rik=d84D9ONHWF0vMg&riu=http%3a%2f%2fthumb101.shutterstock.com%2fdisplay_pic_with_logo%2f3147878%2f312909497%2fstock-vector-female-character-portrait-of-smiling-young-asian-female-teacher-312909497.jpg&ehk=dkh47UW3xyXtcXjLyRPTvOMnK%2bSaHTcTxWeFozuU7ug%3d&risl=&pid=ImgRaw&r=0" alt="Teacher">
+            Teacher
+        </a>
+        <a href="/screens/admin_signup.html">
+            <img src="https://th.bing.com/th/id/OIP.yJM8_9CqyjkffmGHI_jarAHaHa?w=512&h=512&rs=1&pid=ImgDetMain" alt="Admin">
+            Admin
+        </a>
+    </div>
+</body>
+</html>

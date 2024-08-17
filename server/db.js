@@ -48,6 +48,28 @@ connection.connect(err => {
             password VARCHAR(255) NOT NULL
         );
     `;
+    const createMarkTable = `
+   CREATE TABLE IF NOT EXISTS Mark (
+    id VARCHAR(50) ,
+    name VARCHAR(100),
+    department VARCHAR(100),
+    course VARCHAR(100),
+    marks INT
+);
+
+`;
+const createAdminTable = `
+CREATE TABLE IF NOT EXISTS Admin (
+ id VARCHAR(50) ,
+ name VARCHAR(100),
+  email VARCHAR(50) NOT NULL,
+ password VARCHAR(255) NOT NULL
+);
+
+`;
+
+
+    
 
     connection.query(createStudentTable, (err, results) => {
         if (err) {
@@ -71,6 +93,20 @@ connection.connect(err => {
             return;
         }
         console.log('Instructor table created or verified successfully.');
+    });
+    connection.query(createMarkTable, (err, results) => {
+        if (err) {
+            console.error('Error creating Instructor table:', err.stack);
+            return;
+        }
+        console.log('Mark table created or verified successfully.');
+    });
+    connection.query(createAdminTable, (err, results) => {
+        if (err) {
+            console.error('Error creating Instructor table:', err.stack);
+            return;
+        }
+        console.log('Admin table created or verified successfully.');
     });
 });
 

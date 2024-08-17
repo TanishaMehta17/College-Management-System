@@ -1,9 +1,9 @@
 const express = require('express');
 const connection = require('../db');
 const sql= require('mysql2');
-const router = express.Router();
+const InstructorRouter = express.Router();
 
-router.post('/instructor/sign-up', (req, res) => {
+InstructorRouter.post('/instructor/sign-up', (req, res) => {
     const { name, contact_number, department, course, email, password } = req.body;
     
     const sql = `INSERT INTO Instructor (name, contact_number, department, course, email, password)
@@ -14,7 +14,7 @@ router.post('/instructor/sign-up', (req, res) => {
         res.status(201).send({ id: result.insertId });
     });
 });
-router.post('/instructor/login', (req, res) => {
+InstructorRouter.post('/instructor/login', (req, res) => {
     const { email, password } = req.body;
     const query = 'SELECT * FROM Instructor WHERE email = ?';
     
@@ -36,7 +36,7 @@ router.post('/instructor/login', (req, res) => {
         }
     });
 });
-router.post('/exams', (req, res) => {
+InstructorRouter.post('/exams', (req, res) => {
     const { examDate, examCourse, department, timing, examCourseCode } = req.body;
 
     const sql = `INSERT INTO Exam (exam_date, exam_course, department, timing, exam_course_code)
@@ -48,7 +48,7 @@ router.post('/exams', (req, res) => {
     });
 });
 
-router.get('/get-course-code', (req, res) => {
+InstructorRouter.get('/get-course-code', (req, res) => {
     const { courseCode } = req.query; // Use req.query for GET requests
     const query = 'SELECT * FROM Exam WHERE examCourseCode = ?';
     
@@ -60,7 +60,7 @@ router.get('/get-course-code', (req, res) => {
     });
 });
 
-router.post('/update-exam', (req, res) => {
+InstructorRouter.post('/update-exam', (req, res) => {
     const { id, examDate, examCourseCode, examCourse, department, timing } = req.body;
 
     const query = `
@@ -77,7 +77,7 @@ router.post('/update-exam', (req, res) => {
     });
 });
 
-router.post('/upload-marks',(req,res)=>{
+InstructorRouter.post('/upload-marks',(req,res)=>{
     const {id,name, department,course,marks}= req.body;
     const query=`INSERT INTO Mark(id,name,department,course,marks)VALUES(?,?,?,?,?)`;
     connection.query(query,[id,name,department,course,marks],(err,results)=>{
@@ -86,7 +86,7 @@ router.post('/upload-marks',(req,res)=>{
     })
 });
 
-router.post('/update-marks', (req, res) => {
+InstructorRouter.post('/update-marks', (req, res) => {
     const {id,name, department,course,marks}= req.body;
 
     const query = `
@@ -102,7 +102,7 @@ router.post('/update-marks', (req, res) => {
         res.status(200).json({ message: "Marks  updated successfully" });
     });
 });
-router.get('/students/by-department', (req, res) => {
+InstructorRouter.get('/students/by-department', (req, res) => {
     const { department } = req.query;
 
     if (!department) {
@@ -116,4 +116,4 @@ router.get('/students/by-department', (req, res) => {
         res.status(200).json(results);
     });
 });
-module.exports =router;
+module.exports =InstructorRouter;

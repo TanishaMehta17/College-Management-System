@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IIIT Nagpur - Director's Message</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f7;
+            color: #333;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #004080;
+            color: white;
+            padding: 15px;
+        }
+
+        .navbar .student-info {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 100%;
+        }
+
+        .navbar .student-info div {
+            margin-left: 20px;
+            color: white;
+        }
+
+        .navbar .student-info .logout {
+            margin-left: auto;
+        }
+
+        /* Side menu styles */
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #004080; /* Dark blue background */
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            color: #fff;
+        }
+
+        .sidenav a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #f1f1f1; /* Light grey text */
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 36px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .sidenav .closebtn:hover {
+            color: #f1f1f1;
+        }
+
+        /* Hero image styles */
+        .hero {
+            width: 100%;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .hero img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Director's message styles */
+        .message-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .message-text {
+            flex: 2;
+        }
+
+        .director-info {
+            flex: 1;
+            text-align: center;
+        }
+
+        .director-info img {
+            width: 80%;
+            height: auto;
+            border-radius: 50%;
+            margin-top: 20px;
+        }
+
+        .message-text h2 {
+            color: #004080;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .message-text p {
+            font-family: 'Georgia', serif; /* Change font family */
+            font-weight: 400; /* Normal weight */
+            font-size: 18px; /* Increase font size */
+            line-height: 1.8; /* Adjust line height for readability */
+            margin-bottom: 15px; /* Add margin for spacing */
+        }
+
+        .message-text p:last-of-type {
+            font-size: 20px; /* Larger font size for the last paragraph */
+            font-weight: 700; /* Bold weight for emphasis */
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            .message-content {
+                flex-direction: column;
+            }
+
+            .navbar .student-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar .student-info div {
+                margin-bottom: 10px;
+            }
+
+            .director-info img {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="/screens/exam_deatils_show.html">Exam-Details</a>
+        <a href="/screens/marks_details_show.html">Marks-Details</a>
+        <a href="/screens/instructor_details_show.html">Instructors-Details</a>
+        <a href="#">Department-Details</a>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+            <div class="student-info">
+                <div><strong>Student Name:</strong> John Doe</div>
+                <div><strong>Roll No:</strong> 123456</div>
+                <div class="logout"><button class="btn btn-light">Logout</button></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Image -->
+    <div class="hero">
+        <img src="https://www.iiitn.ac.in/images/pages/315/ImageBanner.jpg" class="img-fluid" alt="IIIT Nagpur" />
+    </div>
+
+    <!-- Welcome Section -->
+    <div class="container text-center mb-4">
+        <h1>Welcome</h1>
+    </div>
+
+    <!-- Director's Message Section -->
+    <div class="container message-content">
+        <div class="message-text">
+            <h2>Director Message</h2>
+            <p>A very warm greeting from Indian Institute of Information Technology, Nagpur.</p>
+            <p>I, Dr. O.G. Kakde, am fortunate to have an opportunity to get associated with IIIT, Nagpur as its Founder
+                Director. I joined this coveted Institution of National Importance on 26th June 2018 and have witnessed
+                its phenomenal growth since then.</p>
+            <p>When I look back, I could see the transformation happened in last few years from the humble start of IIIT,
+                Nagpur in the Makeshift Campus to state-of-the-art sprawling 100 Acres Permanent Campus consisting of
+                Air-Conditioned Class Rooms & Laboratories and soothing exteriors. It is true that full development of
+                the campus is a long process and will take time. But I hope that in next few years the Campus shall be
+                rated at par with any other Centrally Funded Institution.</p>
+            <p>From meagre 48 students in 2016-17 to more than 1400 students in 2022-23 and expected strength of 1800
+                students in 2023-24, the Institute has come a long way. The popularity of IIIT, Nagpur is rising amongst
+                the students due to its Interdisciplinary Academic Curriculum. Students are offered a number of
+                interesting combinations of minor / major courses which provide them an opportunity to get exposure to
+                interdisciplinary subjects. Further, the Institute encourages its students for extra-curricular
+                activities through various institute / national level events.</p>
+            <p>The Institute is attracting a large number of coveted companies on campus and provides one of the most
+                promising placements and internships. The Institute is having one of the best Placement Records.</p>
+            <p>The faculties are also research oriented and believes in strong Academic-Industry Collaboration. They are
+                engaged in Sponsored Research Projects, Workshops/Seminars, and Consultancy Projects. The Institute has
+                established an Institute Innovation Cell (IIC) to foster the culture of innovation and start-up
+                ecosystem in the Institute. The Institute has already signed a number of Memorandum of Understandings
+                with various Organizations/Institutions for undertaking need-based research.</p>
+            <p>I sincerely feel that the overall experience of the students / faculties / staff at IIIT, Nagpur shall be
+                a fulfilling experience and the Institute shall scale new heights in the coming years.</p>
+        </div>
+        <div class="director-info">
+           
+            <img src="https://iiitn.ac.in/images/director.jpg" alt="Director O.G. Kakde">
+            <h4>Director O.G. Kakde</h4>
+        </div>
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

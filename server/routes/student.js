@@ -27,9 +27,7 @@ router.post('/students/sign-up', (req, res) => {
     });
 });
 
-// router.post('/students/sign-up', function(req, res) {
-//     res.render('screens/signup_student.html');
-//   });
+
 
 router.post('/login', (req, res) => {
     const { email, password } = req.body;
@@ -44,7 +42,7 @@ router.post('/login', (req, res) => {
             const student = results[0];
             
             if (password === student.password) {
-                return res.status(200).json({ message: 'Logged in successfully' });
+                res.redirect('/screens/dashboard.html');
             } else {
                 return res.status(401).json({ error: 'Incorrect password' });
             }
@@ -66,6 +64,9 @@ router.get('/get-exam-details', (req, res) => {
 
 router.get('/get-marks', (req, res) => {
     const { rollNumber } = req.query;
+    if (!rollNumber) {
+        return res.status(400).json({ error: "Roll number is required" });
+    }
 
     const query = 'SELECT * FROM mark WHERE id = ?';
     
@@ -76,8 +77,9 @@ router.get('/get-marks', (req, res) => {
         res.status(200).json(results);
     });
 });
+
 router.get('/get-all-instrctor',(req,res)=>{
-    const query= 'SELECT* FROM Instructor';
+    const query= 'SELECT name, contact_number,email,department,course FROM Instructor';
     connection.query(query, (err, results) => {
         if (err) return res.status(500).json({ error: 'Database query failed' });
         res.status(200).json(results);

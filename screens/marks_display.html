@@ -47,6 +47,9 @@
             color: red;
             margin-top: 20px;
         }
+        #marks-table {
+            display: none; /* Hide the table initially */
+        }
     </style>
 </head>
 <body>
@@ -78,11 +81,12 @@
 
     <script>
         document.getElementById('fetch-marks-form').addEventListener('submit', function(event) {
-            event.preventDefault();
+            event.preventDefault(); // Prevent the form from submitting the traditional way
 
             const rollNumber = document.getElementById('rollNumber').value;
             const errorMessage = document.getElementById('errorMessage');
             const tableBody = document.querySelector('#marks-table tbody');
+            const marksTable = document.getElementById('marks-table');
 
             if (!rollNumber) {
                 errorMessage.textContent = 'Please enter a roll number.';
@@ -92,11 +96,12 @@
             errorMessage.textContent = ''; // Clear previous error messages
             tableBody.innerHTML = ''; // Clear the table before fetching new data
 
-            fetch(`/get-marks?rollNumber=${rollNumber}`)
+            fetch(`http://localhost:5000/get-marks?rollNumber=${encodeURIComponent(rollNumber)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
                         errorMessage.textContent = data.error;
+                        marksTable.style.display = 'none'; // Hide the table if there's an error
                     } else {
                         data.forEach(mark => {
                             const row = document.createElement('tr');
@@ -109,11 +114,13 @@
                             `;
                             tableBody.appendChild(row);
                         });
+                        marksTable.style.display = 'table'; // Show the table with fetched data
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching marks:', error);
                     errorMessage.textContent = 'An error occurred while fetching marks.';
+                    marksTable.style.display = 'none'; // Hide the table in case of error
                 });
         });
     </script>
