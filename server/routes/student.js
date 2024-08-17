@@ -4,6 +4,7 @@ const sql= require('mysql2');
 const router = express.Router();
 router.use(express.urlencoded({ extended: true }));
 
+
 router.post('/students/sign-up', (req, res) => {
     const name = req.body.name;
     const rollNo = req.body.rollNo;
@@ -22,10 +23,13 @@ router.post('/students/sign-up', (req, res) => {
     connection.query(sql, [name, rollNo, contactNumber, department, open_course, elective, email, password], (err, result) => {
 
         if (err) return res.status(500).send({ error: 'Database connection failed' });
-        res.status(201).send({ id: result.insertId });
+        res.redirect('/screens/login.html');
     });
 });
 
+// router.post('/students/sign-up', function(req, res) {
+//     res.render('screens/signup_student.html');
+//   });
 
 router.post('/login', (req, res) => {
     const { email, password } = req.body;
@@ -50,13 +54,15 @@ router.post('/login', (req, res) => {
     });
 });
 
-router.get('/get-exam-details',(req,res)=>{
-    const query= 'SELECT* FROM Exam';
+router.get('/get-exam-details', (req, res) => {
+    const query = 'SELECT * FROM Exam';
     connection.query(query, (err, results) => {
         if (err) return res.status(500).json({ error: 'Database query failed' });
+        console.log(results);  // Log the results to the console
         res.status(200).json(results);
     });
 });
+
 
 router.get('/get-marks', (req, res) => {
     const { rollNumber } = req.query;

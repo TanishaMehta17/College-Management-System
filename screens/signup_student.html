@@ -51,6 +51,7 @@
     }
     .alert {
       display: none;
+      margin-bottom: 20px;
     }
     .alert-success {
       color: green;
@@ -64,7 +65,8 @@
   <div class="container mt-5">
     <img src="https://www.pngitem.com/pimgs/m/236-2366782_registration-for-under-graduate-graduates-icon-png-transparent.png" alt="College Logo" class="logo">
     <h1>Student Information Form</h1>
-    <form id="studentForm",method="POST", action="/students/sign-up">
+    <div id="responseMessage" class="alert"></div>
+    <form id="studentForm" method="POST" action="http://localhost:5000/students/sign-up">
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>
         <input type="text" class="form-control" id="name" name="name" required>
@@ -100,46 +102,9 @@
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    <div id="responseMessage" class="alert"></div>
   </div>
 
-  <script>
-    document.getElementById('studentForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      
-      const formData = new FormData(this);
-      const jsonData = Object.fromEntries(formData.entries());
-      console.log(formData);
-      console.log(jsonData);
-
-      fetch('http://localhost:5000/students/sign-up', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(jsonData),
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(result => {
-        const messageElement = document.getElementById('responseMessage');
-        messageElement.className = 'alert alert-success';
-        messageElement.textContent = result.message || 'Registered successfully!';
-        messageElement.style.display = 'block';
-      })
-      .catch(error => {
-        const messageElement = document.getElementById('responseMessage');
-        messageElement.className = 'alert alert-danger';
-        messageElement.textContent = 'An error occurred. Please try again.';
-        messageElement.style.display = 'block';
-        console.error('Error:', error);
-      });
-    });
-  </script>
+  
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
