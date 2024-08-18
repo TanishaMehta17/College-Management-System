@@ -28,7 +28,9 @@ app.use(express.static(path.join(__dirname, 'public'))); // Static files directo
 app.use( studentRouter); // Prefix the student routes
 app.use( instructorRouter); // Prefix the instructor routes
 app.use( adminRouter); // Prefix the admin routes
-
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'screens', 'welome_page.html')); // Serve the welcome_page.html
+});
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

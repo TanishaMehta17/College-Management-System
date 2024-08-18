@@ -61,39 +61,47 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <div class="login-link mt-3">
+            <p>Go back to the <a href="http://localhost:5000/screens/dashboard_instructor.html">Home Page</a></p>
+          </div>
     </div>
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        document.getElementById('examForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            fetch('http://localhost:5000/exams', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                var responseMessage = document.getElementById('responseMessage');
-                if (data.error) {
-                    responseMessage.className = 'alert alert-danger';
-                    responseMessage.textContent = data.error;
-                } else {
-                    responseMessage.className = 'alert alert-success';
-                    responseMessage.textContent = 'Exam details added successfully! Exam ID: ' + data.id;
-                }
-                responseMessage.style.display = 'block';
-                this.reset();
-            })
-            .catch(error => {
-                var responseMessage = document.getElementById('responseMessage');
-                responseMessage.className = 'alert alert-danger';
-                responseMessage.textContent = 'Error: ' + error.message;
-                responseMessage.style.display = 'block';
-            });
-        });
+       document.getElementById('examForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var formData = new URLSearchParams(new FormData(this)).toString();
+    
+    fetch('http://localhost:5000/exams', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        var responseMessage = document.getElementById('responseMessage');
+        if (data.error) {
+            responseMessage.className = 'alert alert-danger';
+            responseMessage.textContent = data.error;
+        } else {
+            responseMessage.className = 'alert alert-success';
+            responseMessage.textContent = 'Exam details added successfully! Exam ID: ' + data.id;
+        }
+        responseMessage.style.display = 'block';
+        this.reset();
+    })
+    .catch(error => {
+        var responseMessage = document.getElementById('responseMessage');
+        responseMessage.className = 'alert alert-danger';
+        responseMessage.textContent = 'Error: ' + error.message;
+        responseMessage.style.display = 'block';
+    });
+});
+
     </script>
 </body>
 </html>

@@ -71,7 +71,7 @@
   <div class="container mt-5">
     <h1>Upload Marks</h1>
     <div id="responseMessage" class="alert"></div>
-    <form id="uploadMarksForm" method="POST" action="http://localhost:5000/upload-marks">
+    <form id="uploadMarksForm">
       <div class="mb-3">
         <label for="id" class="form-label">ID</label>
         <input type="text" class="form-control" id="id" name="id" required>
@@ -95,7 +95,7 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <div class="login-link mt-3">
-      <p>Go back to the <a href="/home">Home Page</a></p>
+      <p>Go back to the <a href="http://localhost:5000/screens/dashboard_instructor.html">Home Page</a></p>
     </div>
   </div>
 
@@ -103,9 +103,12 @@
   <script>
     document.getElementById('uploadMarksForm').addEventListener('submit', function(event) {
       event.preventDefault();
-      var formData = new FormData(this);
-      fetch(this.action, {
-        method: this.method,
+      var formData = new URLSearchParams(new FormData(this)).toString();
+      fetch('http://localhost:5000/upload-marks', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
         body: formData
       })
       .then(response => response.json())
@@ -126,4 +129,3 @@
   </script>
 </body>
 </html>
-d

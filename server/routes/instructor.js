@@ -2,15 +2,22 @@ const express = require('express');
 const connection = require('../db');
 const sql= require('mysql2');
 const InstructorRouter = express.Router();
-
+InstructorRouter.use(express.urlencoded({ extended: true }));
 InstructorRouter.post('/instructor/sign-up', (req, res) => {
-    const { name, contact_number, department, course, email, password } = req.body;
     
-    const sql = `INSERT INTO Instructor (name, contact_number, department, course, email, password)
+    const name = req.body.name;
+    const department = req.body.department;
+    const contactNumber = req.body.contactNumber;
+    const course=req.body.course;
+    const email = req.body.email;
+    const password = req.body.password;
+    console.log(name);
+    
+    const sql = `INSERT INTO Instructor (name, contactNumber, department, course, email, password)
                  VALUES (?, ?, ?, ?, ?, ?)`;
 
-    connection.query(sql, [name, contact_number, department, course, email, password], (err, result) => {
-        if (err) return res.status(500).send({ error: 'Database connection failed' });
+    connection.query(sql, [name, contactNumber, department, course, email, password], (err, result) => {
+        if (err) return res.status(500).send({ error: 'Database connection failed' + err.message});
         res.redirect('/screens/instructor_login.html'); 
     });
 });
@@ -37,13 +44,17 @@ InstructorRouter.post('/instructor/login', (req, res) => {
     });
 });
 InstructorRouter.post('/exams', (req, res) => {
-    const { examDate, examCourse, department, timing, examCourseCode } = req.body;
-
+    const examDate = req.body.examDate;
+const examCourse = req.body.examCourse;
+const department = req.body.department;
+const timing = req.body.timing;
+const examCourseCode = req.body.examCourseCode;
+console.log(examDate);
     const sql = `INSERT INTO Exam (exam_date, exam_course, department, timing, exam_course_code)
                  VALUES (?, ?, ?, ?, ?)`;
     
     connection.query(sql, [examDate, examCourse, department, timing, examCourseCode], (err, result) => {
-        if (err) return res.status(500).json({ error: 'Database query failed' });
+        if (err) return res.status(500).json({ error: 'Database query failed'+err.message });
         res.status(201).json({ id: result.insertId });
     });
 });
@@ -95,7 +106,13 @@ InstructorRouter.post('/update-exam', (req, res) => {
 });
 
 InstructorRouter.post('/upload-marks',(req,res)=>{
-    const {id,name, department,course,marks}= req.body;
+    
+    const  id =req.body.id;
+    const  name =req.body.name;
+    const  department =req.body.department;
+    const  course =req.body.course;
+    const  marks =req.body.marks;
+    console.log(name)
     const query=`INSERT INTO Mark(id,name,department,course,marks)VALUES(?,?,?,?,?)`;
     connection.query(query,[id,name,department,course,marks],(err,results)=>{
         if(err)  return res.status(500).json({ error: "Database update failed" });

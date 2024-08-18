@@ -179,7 +179,7 @@
             <div class="student-info">
                 <div><strong>Student Name:</strong> John Doe</div>
                 <div><strong>Roll No:</strong> 123456</div>
-                <div class="logout"><button class="btn btn-light">Logout</button></div>
+                <div class="logout"><button class="btn btn-light" onclick="logout()">Logout</button></div>
             </div>
         </div>
     </nav>
@@ -237,6 +237,10 @@
 
         function closeNav() {
             document.getElementById("mySidenav").style.width = "0";
+        }
+        function logout() {
+            // Redirect to the welcome page
+            window.location.href = "http://localhost:5000/screens/welome_page.html";
         }
     </script>
 
