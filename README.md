@@ -30,15 +30,13 @@
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/YourUsername/college-management-system/
+   git clone https://github.com/TanishaMehta17/college-management-system/
 
 
 2. **Navigate to the project directory:**
    ```bash
    cd server
    npm run dev
-
-  
 
 ## Configuration
 
