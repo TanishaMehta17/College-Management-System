@@ -26,6 +26,20 @@
 - **Node.js:** Backend framework handling user authentication, API requests, and data processing.
 - **SQL:** Database queries for managing and manipulating data related to exams, marks, instructors, departments, and students.
 
+## Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/YourUsername/college-management-system/
+
+
+2. **Navigate to the project directory:**
+   ```bash
+   cd server
+   npm run dev
+
+  
+
 ## Configuration
 
 ### Backend Setup
